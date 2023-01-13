@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  role String @unique
+  User User[]
+}
+
+//Users
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      Role     @relation(fields: [roleId], references: [id])
+  Orders    Orders[]
+  roleId    Int
+}
+
+//Category
+
+model Category {
+  id        Int        @id @default(autoincrement())
+  category  String
+  imgTag    String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  products  Products[]
+}
+
+//Porducts
+model Products {
+  id          Int          @id @default(autoincrement())
+  name        String
+  category    Category     @relation(fields: [categoryId], references: [id])
+  price       Float
+  imgUrl      String
+  description String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  categoryId  Int
+  OrderItems  OrderItems[]
+}
+
+//Estatus
+
+model States {
+  id     Int      @id @default(autoincrement())
+  state  String   @unique
+  Orders Orders[]
+}
+
+//Orders
+model Orders {
+  id              Int               @id @default(autoincrement())
+  user            User              @relation(fields: [userId], references: [id])
+  status          States            @relation(fields: [statusId], references: [id])
+  paymentId       String?
+  merchanOrderId  String?
+  shippingPrice   Float
+  subtotal        Float
+  total           Float
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  userId          Int
+  statusId        Int
+  OrderItems      OrderItems[]
+  ShippingDetails ShippingDetails[]
+}
+
+model ShippingDetails {
+  id        Int    @id @default(autoincrement())
+  domicilio String
+  localidad String
+  order     Orders @relation(fields: [ordersId], references: [id])
+  ordersId  Int
+}
+
+model OrderItems {
+  id         Int      @id @default(autoincrement())
+  order      Orders   @relation(fields: [ordersId], references: [id])
+  product    Products @relation(fields: [productsId], references: [id])
+  quantity   Int
+  unitPrice  Float
+  ordersId   Int
+  productsId Int
+}

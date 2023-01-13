@@ -1,0 +1,26 @@
+# https://docs.docker.com/compose/compose-file
+# docker-compose up
+# docker-compose stop
+# docker-compose down
+version: '3.8'
+services:
+  # This starts a local PostgreSQL DB.
+  db:
+    image: postgres:10.3
+    container_name: api-nucba-zappi-db
+    restart: always
+    expose:
+      - '5432'
+    ports:
+      - '5432:5432'
+
+    environment:
+      - POSTGRES_DB=api-nucba-zappi-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+    volumes:
+      - pgdata:/var/lib/postgres/data
+volumes:
+  pgdata: {}
