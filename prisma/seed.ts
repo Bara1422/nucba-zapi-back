@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 async function seed() {
   //Prisma create query to seed models in database
- /*  await prisma.role.createMany({
+  await prisma.role.createMany({
     data: [{ role: 'admin' }, { role: 'user' }],
   });
   await prisma.category.createMany({
@@ -97,7 +97,7 @@ async function seed() {
         price: 100,
       },
     ],
-  }); */
+  });
   await prisma.states.createMany({
     data: [
       {
@@ -118,8 +118,8 @@ async function seed() {
       {
         state: 'rejected',
       },
-    ]
-  })
+    ],
+  });
 }
 seed()
   .then(async () => {
