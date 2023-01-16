@@ -20,5 +20,5 @@ router.post(
   protect,
   createOrder
 );
-
+//verbo GET -> controller (getOrder)
 export default router;

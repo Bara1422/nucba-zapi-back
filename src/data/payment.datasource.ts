@@ -15,9 +15,9 @@ export default class PaymentDataSource implements PaymentRepository {
     const preferenceData: CreatePreferencePayload = {
       ...data,
       back_urls: {
-        pending: process.env.PENDING_URL,
-        success: process.env.SUCCESS_URL,
-        failure: process.env.FAILURE_URL,
+        pending: process.env.PENDING_URL!,
+        success: process.env.SUCCESS_URL!,
+        failure: process.env.FAILURE_URL!,
       },
       shipments: {
         cost: data.shipmentCost,

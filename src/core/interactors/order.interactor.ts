@@ -6,6 +6,8 @@ import { Result } from '../types/response';
 import PaymentRepository from '../repositories/payment.repository';
 import { Currencies, PaymentItem } from '../dto/mercadopago';
 
+//getOrder - no tendria ninguna dependencia
+
 export const createOrderInteractor =
   (orderRepository: OrderRepository, paymentRepository: PaymentRepository) =>
   async (
